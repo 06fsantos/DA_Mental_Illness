@@ -20,9 +20,10 @@ It defines classes_and_methods
 import pandas as pd
 import numpy as np
 import xlsxwriter
+from Drop_Columns import project_data
 
 #Load Original Data Set 
-original_data = pd.read_csv(r'C:\Users\jniemann\Desktop\Project Dataset/36361-0001-Data.tsv', sep='\t')
+original_data = pd.read_csv('36361-0001-Data.tsv', sep='\t')
 
 project_data = original_data[['CASEID', 'HEALTH2', 'AGE2', 'EDUCCAT2', 'EMPSTAT4', 'POVERTY2', 'K6SCMON', 'K6SCYR', 'K6SCMAX', 'QUESTID2','DEPNDANL',
                              'DEPNDCOC','DEPNDHAL', 'DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDILL','DEPNDPSY','ALCEVER','ALCYRTOT',
@@ -33,14 +34,16 @@ print(len(project_data.index))
 print(project_data.shape)
 print(project_data.duplicated().sum())
 
-#ALCYRTOT_avg = project_data.ALCYRTOT <= 366
-#ALCYRTOT_avg = ALCYRTOT_avg.mean()
-#print(ALCYRTOT_avg)
 
-#Consolidate ALCYRTOT Values into zero 
+
+#Consolidate ALCYRTOT Values into zero and identify the mean average for the column 
 ALCYRTOT_mask = (project_data.ALCYRTOT == 991) | (project_data.ALCYRTOT == 993)
 column_name1 = 'ALCYRTOT'
 project_data.loc[ALCYRTOT_mask,column_name1] = 0
+
+alcyrtot_Series = project_data['ALCYRTOT'].values[project_data['ALCYRTOT'].values <= 366]
+alcyrtot_avg = alcyrtot_Series.mean()
+print(alcyrtot_avg)
 
 #Consolidate ALDAYPYR  Values into zero 
 ALDAYPYR_mask = (project_data.ALDAYPYR == 991) | (project_data.ALDAYPYR == 993)
@@ -115,7 +118,10 @@ print(len(remove.index))
 
 #project_data = project_data.drop([remove])
 project_data_removed = project_data[~project_data['QUESTID2'].isin(remove)].dropna()
-print('Table went from',len(project_data),'to',len(project_data_removed))
+project_data_removed = project_data_removed.drop(['QUESTID2','DEPNDANL','DEPNDCOC','DEPNDHAL','DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDILL','DEPNDPSY'], axis = 1)
+print ('Table went from',len(project_data),'to',len(project_data_removed))
+print ('number of alcohol dependencies: {}'.format(project_data_removed['DEPNDALC'].sum()))
+print ('number of marijuana dependencies: {}'.format(project_data_removed['DEPNDMRJ'].sum()))
 
 file_out = 'Project_Data_set.xlsx'
 file_name = 'Data_Analytics_Project_Data.'
