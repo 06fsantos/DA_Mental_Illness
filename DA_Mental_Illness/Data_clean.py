@@ -19,20 +19,17 @@ It defines classes_and_methods
 
 import pandas as pd
 import numpy as np
-import xlsxwriter
-from Drop_Columns import project_data
 
 #Load Original Data Set 
 original_data = pd.read_csv('36361-0001-Data.tsv', sep='\t')
 
 project_data = original_data[['CASEID', 'HEALTH2', 'AGE2', 'EDUCCAT2', 'EMPSTAT4', 'POVERTY2', 'K6SCMON', 'K6SCYR', 'K6SCMAX', 'QUESTID2','DEPNDANL',
-                             'DEPNDCOC','DEPNDHAL', 'DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDILL','DEPNDPSY','ALCEVER','ALCYRTOT',
+                             'DEPNDCOC','DEPNDHAL', 'DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDIEM','DEPNDPSY','ALCEVER','ALCYRTOT',
                              'ALBSTWAY','ALDAYPYR','ALDAYPMO','ALDAYPWK','ALCDAYS', 'NODR30A','DR5DAY','MJEVER','MJYRTOT',
                              'MRDAYPYR','MRDAYPMO','MRDAYPWK','MJDAY30A','DEPNDALC','DEPNDMRJ']][(original_data.CATAGE != 1)].copy()
 
 print(len(project_data.index))
 print(project_data.shape)
-print(project_data.duplicated().sum())
 
 
 
@@ -43,7 +40,7 @@ project_data.loc[ALCYRTOT_mask,column_name1] = 0
 
 alcyrtot_Series = project_data['ALCYRTOT'].values[project_data['ALCYRTOT'].values <= 366]
 alcyrtot_avg = alcyrtot_Series.mean()
-print(alcyrtot_avg)
+print('average number of days drank in past year: {}'.format(alcyrtot_avg))
 
 #Consolidate ALDAYPYR  Values into zero 
 ALDAYPYR_mask = (project_data.ALDAYPYR == 991) | (project_data.ALDAYPYR == 993)
@@ -103,13 +100,13 @@ project_data.loc[MJDAY30A_mask,column_name2] = 0
 
 #Select Columns Indicating Drug Dependence Outside of Marijuana and Alcohol Along with ID
 drug_columns = original_data[['QUESTID2','DEPNDANL','DEPNDCOC','DEPNDHAL',
-                             'DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDILL','DEPNDPSY','ALCEVER','ALCYRTOT','ALDAYPYR','ALDAYPMO','ALDAYPWK','ALCDAYS','NODR30A','DR5DAY','MJEVER','MJYRTOT','MRDAYPYR',
+                             'DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDIEM','DEPNDPSY','ALCEVER','ALCYRTOT','ALDAYPYR','ALDAYPMO','ALDAYPWK','ALCDAYS','NODR30A','DR5DAY','MJEVER','MJYRTOT','MRDAYPYR',
                              'MRDAYPMO','MRDAYPWK','MJDAY30A']].copy()
                              
                              
 #Create Column of IDs Where Drug Dependence Outside Weed/Alcohol was Indicated 
 remove = drug_columns['QUESTID2'][(drug_columns['DEPNDANL'] == 1) | (drug_columns['DEPNDCOC'] == 1) | (drug_columns['DEPNDHAL'] == 1) | (drug_columns['DEPNDHER'] == 1) | (drug_columns['DEPNDINH'] == 1)| (drug_columns['DEPNDSED'] == 1)
-                                  | (drug_columns['DEPNDSTM'] == 1) | (drug_columns['DEPNDTRN'] == 1) | (drug_columns['DEPNDILL'] == 1) | (drug_columns['DEPNDPSY'] == 1)]
+                                  | (drug_columns['DEPNDSTM'] == 1) | (drug_columns['DEPNDTRN'] == 1) | (drug_columns['DEPNDIEM'] == 1) | (drug_columns['DEPNDPSY'] == 1)]
                      
 print(len(remove.index))
 
@@ -118,7 +115,7 @@ print(len(remove.index))
 
 #project_data = project_data.drop([remove])
 project_data_removed = project_data[~project_data['QUESTID2'].isin(remove)].dropna()
-project_data_removed = project_data_removed.drop(['QUESTID2','DEPNDANL','DEPNDCOC','DEPNDHAL','DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDILL','DEPNDPSY'], axis = 1)
+project_data_removed = project_data_removed.drop(['QUESTID2','DEPNDANL','DEPNDCOC','DEPNDHAL','DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDIEM','DEPNDPSY'], axis = 1)
 print ('Table went from',len(project_data),'to',len(project_data_removed))
 print ('number of alcohol dependencies: {}'.format(project_data_removed['DEPNDALC'].sum()))
 print ('number of marijuana dependencies: {}'.format(project_data_removed['DEPNDMRJ'].sum()))
@@ -131,11 +128,3 @@ with pd.ExcelWriter(file_out, engine = 'xlsxwriter') as writer:
     project_data_removed.to_excel(writer)
     writer.save()
     writer.close()
-
-
-
-
-
-    
-
-
