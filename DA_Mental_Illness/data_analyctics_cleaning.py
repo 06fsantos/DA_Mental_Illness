@@ -26,12 +26,38 @@ original_data = pd.read_csv('36361-0001-Data.tsv', sep='\t')
 
 project_data = original_data[['CASEID', 'HEALTH2', 'AGE2', 'EDUCCAT2', 'EMPSTAT4', 'POVERTY2', 'K6SCMON', 'K6SCYR', 'K6SCMAX', 'QUESTID2','DEPNDANL',
                              'DEPNDCOC','DEPNDHAL', 'DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDIEM','DEPNDPSY','ALCEVER','ALCYRTOT',
-                             'ALBSTWAY','ALDAYPYR','ALDAYPMO','ALDAYPWK','ALCDAYS', 'NODR30A','DR5DAY','MJEVER','MJYRTOT',
+                             'ALDAYPYR','ALDAYPMO','ALDAYPWK','ALCDAYS', 'NODR30A','DR5DAY','MJEVER','MJYRTOT',
                              'MRDAYPYR','MRDAYPMO','MRDAYPWK','MJDAY30A','DEPNDALC','DEPNDMRJ']][(original_data.CATAGE != 1)].copy()
 
 print(len(project_data.index))
 print(project_data.shape)
 
+#Consolidate poverty Values into average 
+poverty2_Series = project_data['POVERTY2'].values[project_data['POVERTY2'].values >= 0]
+poverty2_avg = poverty2_Series.mean()
+print('average number of days drank in past year: {}'.format(poverty2_avg))
+
+POVERTY2_avg_mask = (project_data.POVERTY2 == -9)
+column_name1 = 'POVERTY2'
+project_data.loc[POVERTY2_avg_mask,column_name1] = poverty2_avg
+
+#Consolidate K6SCYR Values into average 
+k6scyr_Series = project_data['K6SCYR'].values[project_data['K6SCYR'].values >= 0]
+k6scyr_avg = k6scyr_Series.mean()
+print('average number of days drank in past year: {}'.format(k6scyr_avg))
+
+K6SCYR_avg_mask = (project_data.K6SCYR == -9)
+column_name1 = 'K6SCYR'
+project_data.loc[K6SCYR_avg_mask,column_name1] = k6scyr_avg
+
+#Consolidate HEALTH2 Values into average 
+health2_Series = project_data['HEALTH2'].values[project_data['HEALTH2'].values >= 0]
+health2_avg = health2_Series.mean()
+print('average number of days drank in past year: {}'.format(health2_avg))
+
+HEALTH2_avg_mask = (project_data.HEALTH2 == -9)
+column_name1 = 'HEALTH2'
+project_data.loc[HEALTH2_avg_mask,column_name1] = health2_avg
 
 #Consolidate ALCYRTOT Values into zero or average 
 ALCYRTOT_mask = (project_data.ALCYRTOT == 991) | (project_data.ALCYRTOT == 993)
