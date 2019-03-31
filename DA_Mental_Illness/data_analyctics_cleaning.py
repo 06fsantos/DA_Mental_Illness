@@ -18,7 +18,7 @@ It defines classes_and_methods
 '''
 
 import pandas as pd
-import numpy as np
+
 
 
 #Load Original Data Set 
@@ -32,9 +32,6 @@ project_data = original_data[['CASEID', 'HEALTH2', 'AGE2', 'EDUCCAT2', 'EMPSTAT4
 print(len(project_data.index))
 print(project_data.shape)
 
-#ALCYRTOT_avg = project_data.ALCYRTOT <= 366
-#ALCYRTOT_avg = ALCYRTOT_avg.mean()
-#print(ALCYRTOT_avg)
 
 #Consolidate ALCYRTOT Values into zero or average 
 ALCYRTOT_mask = (project_data.ALCYRTOT == 991) | (project_data.ALCYRTOT == 993)
@@ -232,11 +229,4 @@ with pd.ExcelWriter(file_out, engine = 'xlsxwriter') as writer:
     project_data_removed.to_excel(writer)
     writer.save()
     writer.close()
-
-
-
-
-
-    
-
 
