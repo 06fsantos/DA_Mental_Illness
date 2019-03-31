@@ -22,7 +22,7 @@ import pandas as pd
 
 
 #Load Original Data Set 
-original_data = pd.read_csv('36361-0001-Data.tsv', sep='\t')
+original_data = pd.read_csv('36361-0001-Data.tsv', sep='\t', index_col = None)
 
 project_data = original_data[['CASEID', 'HEALTH2', 'AGE2', 'EDUCCAT2', 'EMPSTAT4', 'POVERTY2', 'K6SCMON', 'K6SCYR', 'K6SCMAX', 'QUESTID2','DEPNDANL',
                              'DEPNDCOC','DEPNDHAL', 'DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDIEM','DEPNDPSY','ALCEVER','ALCYRTOT',
