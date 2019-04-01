@@ -90,20 +90,20 @@ ALDAYPMO_mask = (project_data.ALDAYPMO == 91) | (project_data.ALDAYPMO == 93)
 column_name2 = 'ALDAYPMO'
 project_data.loc[ALDAYPMO_mask,column_name2] = 0
 
-aldaypmo_Series = project_data['ALDAYPMO'].values[project_data['ALDAYPMO'].values <= 366]
+aldaypmo_Series = project_data['ALDAYPMO'].values[project_data['ALDAYPMO'].values <= 31]
 aldaypmo_avg = aldaypmo_Series.mean()
-print('average number of days drank in past year: {}'.format(aldaypmo_avg))
+print('average number of days drank in past month: {}'.format(aldaypmo_avg))
 
 ALDAYPMO_avg_mask = (project_data.ALDAYPMO == 89) | (project_data.ALDAYPMO == 94) | (project_data.ALDAYPMO == 97) | (project_data.ALDAYPMO == 98) | (project_data.ALDAYPMO == 99)
 column_name2 = 'ALDAYPMO'
-project_data.loc[ALDAYPMO_avg_mask,column_name2] = 0
+project_data.loc[ALDAYPMO_avg_mask,column_name2] = aldaypmo_avg
 
 #Consolidate ALDAYPWK Values into zero 
 ALDAYPWK_mask = (project_data.ALDAYPWK == 91) | (project_data.ALDAYPWK == 93)
 column_name2 = 'ALDAYPWK'
 project_data.loc[ALDAYPWK_mask,column_name2] = 0
 
-aldaypwk_Series = project_data['ALDAYPWK'].values[project_data['ALDAYPWK'].values <= 366]
+aldaypwk_Series = project_data['ALDAYPWK'].values[project_data['ALDAYPWK'].values <= 7]
 aldaypwk_avg = aldaypwk_Series.mean()
 print('average number of days drank in past year: {}'.format(aldaypwk_avg))
 
@@ -116,7 +116,7 @@ ALCDAYS_mask = (project_data.ALCDAYS == 91) | (project_data.ALCDAYS == 93)
 column_name2 = 'ALCDAYS'
 project_data.loc[ALCDAYS_mask,column_name2] = 0
 
-alcdays_Series = project_data['ALCDAYS'].values[project_data['ALCDAYS'].values <= 366]
+alcdays_Series = project_data['ALCDAYS'].values[project_data['ALCDAYS'].values <= 30]
 alcdays_avg = alcdays_Series.mean()
 print('average number of days drank in past year: {}'.format(alcdays_avg))
 
@@ -129,7 +129,7 @@ NODR30A_mask = (project_data.NODR30A == 991) | (project_data.NODR30A == 993)
 column_name2 = 'NODR30A'
 project_data.loc[NODR30A_mask,column_name2] = 0
 
-nodr30a_Series = project_data['NODR30A'].values[project_data['NODR30A'].values <= 366]
+nodr30a_Series = project_data['NODR30A'].values[project_data['NODR30A'].values <= 90]
 nodr30a_avg = nodr30a_Series.mean()
 print('average number of days drank in past year: {}'.format(nodr30a_avg))
 
@@ -142,7 +142,7 @@ DR5DAY_mask = (project_data.DR5DAY == 91) | (project_data.DR5DAY == 93) | (proje
 column_name2 = 'DR5DAY'
 project_data.loc[DR5DAY_mask,column_name2] = 0
 
-dr5day_Series = project_data['DR5DAY'].values[project_data['DR5DAY'].values <= 366]
+dr5day_Series = project_data['DR5DAY'].values[project_data['DR5DAY'].values <= 30]
 dr5day_avg = dr5day_Series.mean()
 print('average number of days drank in past year: {}'.format(dr5day_avg))
 
@@ -181,7 +181,7 @@ MRDAYPMO_mask = (project_data.MRDAYPMO == 91) | (project_data.MRDAYPMO == 93)
 column_name2 = 'MRDAYPMO'
 project_data.loc[MRDAYPYR_mask,column_name2] = 0
 
-mrdaypmo_Series = project_data['MRDAYPMO'].values[project_data['MRDAYPMO'].values <= 366]
+mrdaypmo_Series = project_data['MRDAYPMO'].values[project_data['MRDAYPMO'].values <= 31]
 mrdaypmo_avg = mrdaypmo_Series.mean()
 print('average number of days drank in past year: {}'.format(mrdaypmo_avg))
 
@@ -194,7 +194,7 @@ MRDAYPWK_mask = (project_data.MRDAYPWK == 91) | (project_data.MRDAYPWK == 93)
 column_name2 = 'MRDAYPWK'
 project_data.loc[MRDAYPWK_mask,column_name2] = 0
 
-mrdaypwk_Series = project_data['MRDAYPWK'].values[project_data['MRDAYPWK'].values <= 366]
+mrdaypwk_Series = project_data['MRDAYPWK'].values[project_data['MRDAYPWK'].values <= 7]
 mrdaypwk_avg = mrdaypwk_Series.mean()
 print('average number of days drank in past year: {}'.format(mrdaypwk_avg))
 
@@ -207,7 +207,7 @@ MJDAY30A_mask = (project_data.MJDAY30A == 91) | (project_data.MJDAY30A == 93)
 column_name2 = 'MJDAY30A'
 project_data.loc[MJDAY30A_mask,column_name2] = 0
 
-mjday30a_Series = project_data['MJDAY30A'].values[project_data['MJDAY30A'].values <= 366]
+mjday30a_Series = project_data['MJDAY30A'].values[project_data['MJDAY30A'].values <= 30]
 mjday30a_avg = mjday30a_Series.mean()
 print('average number of days drank in past year: {}'.format(mjday30a_avg))
 

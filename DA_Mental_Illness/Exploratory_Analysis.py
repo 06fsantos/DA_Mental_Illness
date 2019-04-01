@@ -42,6 +42,13 @@ if __name__ == '__main__':
     data = pd.read_excel(io = 'Project_Data_set.xlsx')
     
     # Relationship between number of drinks and k6 for people who abuse alcohol 
+    alc_x_data = isolate_columns(data, 'ALCYRTOT')
+    alc_y_data = isolate_columns(data, 'ALDAYPMO')
+    title = 'alcohol consumption in the past year and mental distress (K6) for people were dependent on alcohol in the past 12 months'
+    plot_relationship(alc_x_data, alc_y_data, title)   
+    
+    '''
+    # Relationship between number of drinks and k6 for people who abuse alcohol 
     alc_x_data = isolate_columns_dependency(data, 'NODR30A', 'DEPNDALC', 1, 'K6SCMON', 2, 'NODR30A', 0)
     alc_y_data = isolate_columns_dependency(data, 'K6SCMON', 'DEPNDALC', 1, 'K6SCMON', 2, 'NODR30A', 0)
     title = 'alcohol consumption in the past year and mental distress (K6) for people were dependent on alcohol in the past 12 months'
@@ -64,6 +71,7 @@ if __name__ == '__main__':
     alc_y_data = isolate_columns_dependency(data, 'K6SCMON', 'DEPNDMRJ', 0, 'K6SCMON', 2, 'MJDAY30A', 0)
     title = 'marijuana consumption in past month and mental distress (K6) for people were not dependent on marijuana in the past 12 months'
     plot_relationship(alc_x_data, alc_y_data, title)
+    '''
     '''
     # relationship between marijuana abuse use and K6
     mrj_x_data = isolate_columns_dependency(data, 'MRDAYPYR', 'DEPNDMRJ', 0, 'K6SCMAX', 0, 'MRDAYPYR', 10)
