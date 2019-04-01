@@ -16,7 +16,7 @@ It defines classes_and_methods
 @contact:    user_email
 @deffield    updated: Updated
 '''
-
+ 
 import pandas as pd
 
 
@@ -25,8 +25,8 @@ import pandas as pd
 original_data = pd.read_csv('36361-0001-Data.tsv', sep='\t', index_col = None)
 
 project_data = original_data[['CASEID', 'HEALTH2', 'AGE2', 'EDUCCAT2', 'EMPSTAT4', 'POVERTY2', 'K6SCMON', 'K6SCYR', 'K6SCMAX', 'QUESTID2','DEPNDANL',
-                             'DEPNDCOC','DEPNDHAL', 'DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDIEM','DEPNDPSY','ALCEVER','ALCYRTOT',
-                             'ALDAYPYR','ALDAYPMO','ALDAYPWK','ALCDAYS', 'NODR30A','DR5DAY','MJEVER','MJYRTOT',
+                             'DEPNDCOC','DEPNDHAL', 'DEPNDHER','DEPNDINH','DEPNDSED','DEPNDSTM','DEPNDTRN','DEPNDIEM','DEPNDPSY','ALCYRTOT',
+                             'ALDAYPYR','ALDAYPMO','ALDAYPWK','ALCDAYS', 'NODR30A','DR5DAY','MJYRTOT',
                              'MRDAYPYR','MRDAYPMO','MRDAYPWK','MJDAY30A','DEPNDALC','DEPNDMRJ']][(original_data.CATAGE != 1)].copy()
 
 print(len(project_data.index))
@@ -133,7 +133,7 @@ nodr30a_Series = project_data['NODR30A'].values[project_data['NODR30A'].values <
 nodr30a_avg = nodr30a_Series.mean()
 print('average number of days drank in past year: {}'.format(nodr30a_avg))
 
-NODR30A_avg_mask = (project_data.NODR30A == 994) | (project_data.NODR30A == 997) | (project_data.NODR30A == 998)
+NODR30A_avg_mask = (project_data.NODR30A == 975) | (project_data.NODR30A == 985) | (project_data.NODR30A == 994) | (project_data.NODR30A == 997) | (project_data.NODR30A == 998)
 column_name2 = 'NODR30A'
 project_data.loc[NODR30A_avg_mask,column_name2] = nodr30a_avg
 
